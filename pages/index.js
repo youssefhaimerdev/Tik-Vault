@@ -224,7 +224,7 @@ export default function Home() {
     }
   }
 
-  const SITE_URL = 'https://tik-vault.vercel.app';
+  const SITE_URL = 'https://tikvault.app';
   const TITLE = 'TikVault — Download TikTok Videos Without Watermark Free';
   const DESCRIPTION =
     'TikVault is the fastest free TikTok video downloader. Save TikTok videos without watermark in HD MP4 or extract MP3 audio instantly. No login required. Works on iPhone, Android & PC.';
