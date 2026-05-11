@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {<meta name="google-adsense-account" content="ca-pub-3379075069129713" />}
+        {/* Google AdSense — replace with your publisher ID */}
         {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossOrigin="anonymous"></script> */}
 
         {/* Preconnect for fonts */}
