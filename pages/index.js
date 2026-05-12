@@ -18,6 +18,11 @@ function fmtNum(n) {
   return String(n);
 }
 
+
+function proxyUrl(url, filename) {
+  if (!url) return null;
+  return `/api/proxy?url=${encodeURIComponent(url)}&filename=${encodeURIComponent(filename)}`;
+}
 const IconDownload = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>);
 const IconMusic = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>);
 const IconVideo = () => (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>);
@@ -132,21 +137,21 @@ function DownloadModal({ result, onClose }) {
           <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Choose format</p>
 
           {result.downloads.videoHD && (
-            <a href={result.downloads.videoHD} download target="_blank" rel="noopener noreferrer"
+            <a href={proxyUrl(result.downloads.videoHD, "tikvault-hd")}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 20px', borderRadius: 12, background: 'linear-gradient(135deg, #FF2D78, #8B5CF6)', color: 'white', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
               <IconVideo /> Download HD Video (No Watermark)
             </a>
           )}
 
           {result.downloads.videoSD && (
-            <a href={result.downloads.videoSD} download target="_blank" rel="noopener noreferrer"
+            <a href={proxyUrl(result.downloads.videoSD, "tikvault-sd")}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#94a3b8', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
               <IconDownload /> Download SD Video
             </a>
           )}
 
           {result.downloads.audio && (
-            <a href={result.downloads.audio} download target="_blank" rel="noopener noreferrer"
+            <a href={proxyUrl(result.downloads.audio, "tikvault-audio")}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#00F5FF', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
               <IconMusic /> Download MP3 Audio
             </a>
