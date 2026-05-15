@@ -16,6 +16,19 @@ const nextConfig = {
       },
     ];
   },
+  async headers() {
+    return [
+      // Tell Google to never index the vercel.app subdomain — prevents
+      // duplicate-content and redirect-canonicalization issues in Search Console
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'tik-vault.vercel.app' }],
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

@@ -4,8 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Google AdSense — replace with your publisher ID */}
-        {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossOrigin="anonymous"></script> */}
+        {/* Google AdSense */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3379075069129713" crossOrigin="anonymous"></script>
 
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-3RW2NVTJXD"></script>
          <script dangerouslySetInnerHTML={{ __html: `

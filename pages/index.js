@@ -1,11 +1,42 @@
 import Head from 'next/head';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
-function AdSlot({ className = '', label = 'Advertisement', style = {} }) {
+function AdSlot({ className = '', style = {} }) {
+  const insRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    // If AdSense script hasn't loaded, keep hidden — no empty box shown
+    if (typeof window === 'undefined' || !window.adsbygoogle) return;
+
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (_) {}
+
+    const ins = insRef.current;
+    if (!ins) return;
+
+    // Watch AdSense's own data-ad-status attribute
+    const mo = new MutationObserver(() => {
+      if (ins.getAttribute('data-ad-status') === 'filled') {
+        setVisible(true);
+        mo.disconnect();
+      }
+    });
+    mo.observe(ins, { attributes: true, attributeFilter: ['data-ad-status'] });
+    return () => mo.disconnect();
+  }, []);
+
+  // Hidden by default — only shown when AdSense confirms a fill
   return (
-    <div className={`ad-slot ${className}`} style={style}>
-      <span>{label}</span>
-    </div>
+    <ins
+      ref={insRef}
+      className={`adsbygoogle ${className}`}
+      style={{ display: visible ? 'block' : 'none', ...style }}
+      data-ad-client="ca-pub-3379075069129713"
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    />
   );
 }
 
@@ -84,6 +115,14 @@ const FAQS = [
 
 /* ─── Download Modal ──────────────────────────────────────────────────────── */
 function DownloadModal({ result, onClose }) {
+  // Build a creator-named filename: @username_videoId
+  const baseFilename = (() => {
+    const user = (result.author?.username || result.author?.nickname || 'tiktok')
+      .replace(/[^a-zA-Z0-9_]/g, '');
+    const id = result.id || Date.now();
+    return `@${user}_${id}`;
+  })();
+
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -145,19 +184,19 @@ function DownloadModal({ result, onClose }) {
           <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Choose format</p>
 
           {result.downloads.videoHD && (
-            <a href={proxyUrl(result.downloads.videoHD, 'tikvault-hd')} download
+            <a href={proxyUrl(result.downloads.videoHD, `${baseFilename}_hd`)} download
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 20px', borderRadius: 12, background: 'linear-gradient(135deg, #FF2D78, #8B5CF6)', color: 'white', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
               <IconVideo /> Download HD Video (No Watermark)
             </a>
           )}
           {result.downloads.videoSD && (
-            <a href={proxyUrl(result.downloads.videoSD, 'tikvault-sd')} download
+            <a href={proxyUrl(result.downloads.videoSD, `${baseFilename}_sd`)} download
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#94a3b8', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
               <IconDownload /> Download SD Video
             </a>
           )}
           {result.downloads.audio && (
-            <a href={proxyUrl(result.downloads.audio, 'tikvault-audio')} download
+            <a href={proxyUrl(result.downloads.audio, `${baseFilename}_audio`)} download
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#00F5FF', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
               <IconMusic /> Download MP3 Audio
             </a>
@@ -168,7 +207,7 @@ function DownloadModal({ result, onClose }) {
               <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Slideshow ({result.images.length} images)</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                 {result.images.slice(0, 8).map((img, i) => (
-                  <a key={i} href={proxyUrl(img, `tikvault-slide-${i + 1}`)} download
+                  <a key={i} href={proxyUrl(img, `${baseFilename}_slide${i + 1}`)} download
                     style={{ aspectRatio: '9/16', borderRadius: 8, overflow: 'hidden', border: '1px solid #1A2240', display: 'block' }}>
                     <img src={img} alt={`Slide ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
                   </a>
