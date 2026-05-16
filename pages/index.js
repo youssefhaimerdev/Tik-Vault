@@ -2,12 +2,12 @@ import Head from 'next/head';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
 function AdSlot({ className = '', style = {} }) {
+  const wrapRef = useRef(null);
   const insRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // If AdSense script hasn't loaded, keep hidden — no empty box shown
-    if (typeof window === 'undefined' || !window.adsbygoogle) return;
+    if (typeof window === 'undefined') return;
 
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -16,7 +16,7 @@ function AdSlot({ className = '', style = {} }) {
     const ins = insRef.current;
     if (!ins) return;
 
-    // Watch AdSense's own data-ad-status attribute
+    // AdSense sets data-ad-status="filled" when an ad loads — watch for it
     const mo = new MutationObserver(() => {
       if (ins.getAttribute('data-ad-status') === 'filled') {
         setVisible(true);
@@ -27,16 +27,24 @@ function AdSlot({ className = '', style = {} }) {
     return () => mo.disconnect();
   }, []);
 
-  // Hidden by default — only shown when AdSense confirms a fill
+  // IMPORTANT: visibility is controlled on the wrapper div, NOT the ins element.
+  // This preserves the responsive Tailwind classes (hidden md:flex / flex md:hidden)
+  // which would be overridden if display were set as inline style on the ins itself.
   return (
-    <ins
-      ref={insRef}
-      className={`adsbygoogle ${className}`}
-      style={{ display: visible ? 'block' : 'none', ...style }}
-      data-ad-client="ca-pub-3379075069129713"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    />
+    <div
+      ref={wrapRef}
+      className={className}
+      style={{ display: visible ? undefined : 'none', ...style }}
+    >
+      <ins
+        ref={insRef}
+        className="adsbygoogle"
+        style={{ display: 'block', width: '100%', height: '100%' }}
+        data-ad-client="ca-pub-3379075069129713"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </div>
   );
 }
 
@@ -150,7 +158,7 @@ function DownloadModal({ result, onClose }) {
 
         {/* Top ad */}
         <div style={{ padding: '14px 20px 0' }}>
-          <AdSlot label="Advertisement" style={{ height: 90, borderRadius: 10 }} />
+          <AdSlot style={{ height: 90, borderRadius: 10 }} />
         </div>
 
         {/* Video info */}
@@ -219,7 +227,7 @@ function DownloadModal({ result, onClose }) {
 
         {/* Bottom ad */}
         <div style={{ padding: '0 20px 20px' }}>
-          <AdSlot label="Advertisement" style={{ height: 250, borderRadius: 10 }} />
+          <AdSlot style={{ height: 250, borderRadius: 10 }} />
         </div>
       </div>
       <style>{`
@@ -330,8 +338,8 @@ export default function Home() {
 
         {/* TOP AD */}
         <div className="relative z-10 max-w-6xl mx-auto px-4 pt-4">
-          <AdSlot label="Advertisement — 728×90" className="h-[90px] hidden md:flex" />
-          <AdSlot label="Advertisement — 320×50" className="h-[50px] flex md:hidden" />
+          <AdSlot className="h-[90px] hidden md:flex" />
+          <AdSlot className="h-[50px] flex md:hidden" />
         </div>
 
         {/* HERO */}
@@ -385,7 +393,7 @@ export default function Home() {
 
         {/* MID AD */}
         <div className="relative z-10 max-w-3xl mx-auto px-4 pb-8">
-          <AdSlot label="Advertisement — 336×280" className="h-[280px] max-w-sm mx-auto" />
+          <AdSlot className="h-[280px] max-w-sm mx-auto" />
         </div>
 
         {/* ── MAIN CONTENT SECTION ────────────────────────────────────────── */}
@@ -478,8 +486,8 @@ export default function Home() {
 
         {/* MID AD */}
         <div className="relative z-10 max-w-4xl mx-auto px-4 pb-8">
-          <AdSlot label="Advertisement — 728×90" className="h-[90px] hidden md:flex" />
-          <AdSlot label="Advertisement — 320×100" className="h-[100px] flex md:hidden" />
+          <AdSlot className="h-[90px] hidden md:flex" />
+          <AdSlot className="h-[100px] flex md:hidden" />
         </div>
 
         {/* ── FEATURES ─────────────────────────────────────────────────────── */}
@@ -532,8 +540,8 @@ export default function Home() {
 
         {/* MID AD */}
         <div className="relative z-10 max-w-4xl mx-auto px-4 pb-8">
-          <AdSlot label="Advertisement — 728×90" className="h-[90px] hidden md:flex" />
-          <AdSlot label="Advertisement — 320×100" className="h-[100px] flex md:hidden" />
+          <AdSlot className="h-[90px] hidden md:flex" />
+          <AdSlot className="h-[100px] flex md:hidden" />
         </div>
 
         {/* ── FAQ ───────────────────────────────────────────────────────────── */}
@@ -559,8 +567,8 @@ export default function Home() {
 
         {/* BOTTOM AD */}
         <div className="relative z-10 max-w-4xl mx-auto px-4 pb-8">
-          <AdSlot label="Advertisement — 728×90" className="h-[90px] hidden md:flex" />
-          <AdSlot label="Advertisement — 320×50" className="h-[50px] flex md:hidden" />
+          <AdSlot className="h-[90px] hidden md:flex" />
+          <AdSlot className="h-[50px] flex md:hidden" />
         </div>
 
         {/* FOOTER */}
