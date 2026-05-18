@@ -331,6 +331,7 @@ export default function Home() {
               <a href="#how-to" className="hover:text-white transition-colors">How to Download</a>
               <a href="#features" className="hover:text-white transition-colors">Features</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+              <a href="/blog" className="hover:text-white transition-colors">Guides</a>
             </nav>
             <span className="text-xs font-mono px-3 py-1.5 rounded-full border border-[#FF2D7840] text-[#FF2D78] hidden sm:block">Free · No Watermark</span>
           </div>
@@ -544,6 +545,28 @@ export default function Home() {
           <AdSlot className="h-[100px] flex md:hidden" />
         </div>
 
+        {/* ── GUIDES ─────────────────────────────────────────────────────────── */}
+        <section className="relative z-10 max-w-4xl mx-auto px-4 pb-12">
+          <h2 className="font-mono font-bold text-xl sm:text-2xl text-white mb-2 text-center">Guides &amp; Tips</h2>
+          <p className="text-center text-slate-500 text-sm mb-8">Learn how to get the most out of TikTok downloading.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { href: '/blog/how-to-download-tiktok-videos-without-watermark', tag: 'Guide', title: 'How to Download TikTok Videos Without Watermark', desc: 'Step-by-step for every device — iPhone, Android, PC and Mac.' },
+              { href: '/blog/tiktok-hd-vs-sd-video-quality', tag: 'Tips', title: 'HD vs SD Downloads: Which Should You Choose?', desc: 'Resolution, file size, bitrate — what the difference actually means.' },
+              { href: '/blog/how-to-download-tiktok-audio-mp3', tag: 'Tutorial', title: 'Save TikTok Audio as MP3', desc: 'How to extract sounds, songs and voiceovers from any TikTok video.' },
+            ].map((g) => (
+              <a key={g.href} href={g.href} style={{ textDecoration: 'none' }}>
+                <div className="h-full rounded-2xl p-4 border border-[#1A2240] bg-[#0D1120] hover:border-[#FF2D7850] transition-colors flex flex-col gap-2">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border border-[#FF2D7830] text-[#FF2D78] bg-[#FF2D7810] self-start">{g.tag}</span>
+                  <p className="text-white text-sm font-semibold leading-snug">{g.title}</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">{g.desc}</p>
+                  <p className="text-[#FF2D78] text-xs font-mono mt-auto pt-1">Read →</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
         {/* ── FAQ ───────────────────────────────────────────────────────────── */}
         <section id="faq" className="relative z-10 max-w-4xl mx-auto px-4 pb-16">
           <h2 className="font-mono font-bold text-xl sm:text-2xl text-white mb-2 text-center">
@@ -582,6 +605,7 @@ export default function Home() {
               <nav className="flex items-center gap-6 text-xs text-slate-500 flex-wrap justify-center">
                 <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
                 <a href="/terms" className="hover:text-white transition-colors">Terms of Use</a>
+                <a href="/blog" className="hover:text-white transition-colors">Guides</a>
                 <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
               </nav>
             </div>
