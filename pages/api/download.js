@@ -55,6 +55,10 @@ export default async function handler(req, res) {
 
     const video = data.data;
 
+    // Slideshow (photo) posts have images but no real video stream.
+    // tikwm puts background music in hdplay/play for these — treat them as audio only.
+    const isSlideshow = Array.isArray(video.images) && video.images.length > 0;
+
     // Build a clean, safe response — never expose raw upstream data
     const result = {
       id: video.id,
@@ -72,21 +76,24 @@ export default async function handler(req, res) {
         shares: video.share_count ?? 0,
       },
       downloads: {
-        // No-watermark HD video (720p+)
-        videoHD: video.hdplay
+        // For slideshow posts these fields point to audio — hide them
+        videoHD: !isSlideshow && video.hdplay
           ? `https://www.tikwm.com${video.hdplay}`
           : null,
-        // No-watermark SD video
-        videoSD: video.play
+        videoSD: !isSlideshow && video.play
           ? `https://www.tikwm.com${video.play}`
           : null,
-        // MP3 audio
+        // MP3 audio (background music for slideshows, audio track for videos)
         audio: video.music
           ? `https://www.tikwm.com${video.music}`
           : null,
       },
-      // Photo slideshow images (if any)
-      images: Array.isArray(video.images) ? video.images : [],
+      // Photo slideshow — extract URL string from objects or strings
+      images: isSlideshow
+        ? video.images.map(img =>
+            typeof img === 'string' ? img : (img?.url || img?.download_url || null)
+          ).filter(Boolean)
+        : [],
       duration: video.duration ?? 0,
     };
 

@@ -189,39 +189,53 @@ function DownloadModal({ result, onClose }) {
 
         {/* Download buttons */}
         <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Choose format</p>
 
-          {result.downloads.videoHD && (
-            <a href={proxyUrl(result.downloads.videoHD, `${baseFilename}_hd`)} download
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 20px', borderRadius: 12, background: 'linear-gradient(135deg, #FF2D78, #8B5CF6)', color: 'white', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
-              <IconVideo /> Download HD Video (No Watermark)
-            </a>
-          )}
-          {result.downloads.videoSD && (
-            <a href={proxyUrl(result.downloads.videoSD, `${baseFilename}_sd`)} download
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#94a3b8', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
-              <IconDownload /> Download SD Video
-            </a>
-          )}
-          {result.downloads.audio && (
-            <a href={proxyUrl(result.downloads.audio, `${baseFilename}_audio`)} download
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#00F5FF', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
-              <IconMusic /> Download MP3 Audio
-            </a>
-          )}
-
-          {result.images?.length > 0 && (
-            <div style={{ marginTop: 8 }}>
-              <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Slideshow ({result.images.length} images)</p>
+          {result.images?.length > 0 ? (
+            /* ── SLIDESHOW POST ── */
+            <>
+              <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
+                Photo Slideshow · {result.images.length} image{result.images.length !== 1 ? 's' : ''}
+              </p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                 {result.images.slice(0, 8).map((img, i) => (
                   <a key={i} href={proxyUrl(img, `${baseFilename}_slide${i + 1}`)} download
-                    style={{ aspectRatio: '9/16', borderRadius: 8, overflow: 'hidden', border: '1px solid #1A2240', display: 'block' }}>
+                    style={{ aspectRatio: '9/16', borderRadius: 8, overflow: 'hidden', border: '1px solid #1A2240', display: 'block', position: 'relative' }}>
                     <img src={img} alt={`Slide ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                    <div style={{ position: 'absolute', bottom: 4, right: 4, background: '#00000080', borderRadius: 4, padding: '2px 5px', fontSize: 10, color: 'white', fontFamily: 'monospace' }}>↓</div>
                   </a>
                 ))}
               </div>
-            </div>
+              <p style={{ color: '#475569', fontSize: 11, textAlign: 'center', marginTop: 2 }}>Tap any image to download it</p>
+              {result.downloads.audio && (
+                <a href={proxyUrl(result.downloads.audio, `${baseFilename}_audio`)} download
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#00F5FF', fontWeight: 500, fontSize: 14, textDecoration: 'none', marginTop: 4 }}>
+                  <IconMusic /> Download Background Audio (MP3)
+                </a>
+              )}
+            </>
+          ) : (
+            /* ── VIDEO POST ── */
+            <>
+              <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>Choose format</p>
+              {result.downloads.videoHD && (
+                <a href={proxyUrl(result.downloads.videoHD, `${baseFilename}_hd`)} download
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px 20px', borderRadius: 12, background: 'linear-gradient(135deg, #FF2D78, #8B5CF6)', color: 'white', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+                  <IconVideo /> Download HD Video (No Watermark)
+                </a>
+              )}
+              {result.downloads.videoSD && (
+                <a href={proxyUrl(result.downloads.videoSD, `${baseFilename}_sd`)} download
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#94a3b8', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
+                  <IconDownload /> Download SD Video
+                </a>
+              )}
+              {result.downloads.audio && (
+                <a href={proxyUrl(result.downloads.audio, `${baseFilename}_audio`)} download
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px 20px', borderRadius: 12, background: '#0D1120', border: '1px solid #1A2240', color: '#00F5FF', fontWeight: 500, fontSize: 14, textDecoration: 'none' }}>
+                  <IconMusic /> Download MP3 Audio
+                </a>
+              )}
+            </>
           )}
         </div>
 

@@ -22,7 +22,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid url' });
   }
 
-  if (!decoded.includes('tikwm.com')) {
+  const allowedDomains = ['tikwm.com', 'tiktokcdn.com', 'tiktokcdn-us.com'];
+  if (!allowedDomains.some(d => decoded.includes(d))) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
@@ -43,8 +44,10 @@ export default async function handler(req, res) {
 
     // Determine file extension from content type
     let ext = '.mp4';
-    if (contentType.includes('audio') || contentType.includes('mpeg')) ext = '.mp3';
+    if (contentType.startsWith('audio/')) ext = '.mp3';
     else if (contentType.includes('jpeg') || contentType.includes('jpg')) ext = '.jpg';
+    else if (contentType.includes('webp')) ext = '.webp';
+    else if (contentType.includes('png')) ext = '.png';
 
     const safeFilename = `${filename}${ext}`;
 
