@@ -196,14 +196,17 @@ function DownloadModal({ result, onClose }) {
               <p style={{ color: '#475569', fontSize: 11, fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
                 Photo Slideshow · {result.images.length} image{result.images.length !== 1 ? 's' : ''}
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
-                {result.images.slice(0, 8).map((img, i) => (
-                  <a key={i} href={proxyUrl(img, `${baseFilename}_slide${i + 1}`)} download
-                    style={{ aspectRatio: '9/16', borderRadius: 8, overflow: 'hidden', border: '1px solid #1A2240', display: 'block', position: 'relative' }}>
-                    <img src={img} alt={`Slide ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
-                    <div style={{ position: 'absolute', bottom: 4, right: 4, background: '#00000080', borderRadius: 4, padding: '2px 5px', fontSize: 10, color: 'white', fontFamily: 'monospace' }}>↓</div>
-                  </a>
-                ))}
+              <div style={{ maxHeight: 380, overflowY: 'auto', paddingRight: 2 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                  {result.images.map((img, i) => (
+                    <a key={i} href={proxyUrl(img, `${baseFilename}_slide${i + 1}`)} download
+                      style={{ aspectRatio: '9/16', borderRadius: 8, overflow: 'hidden', border: '1px solid #1A2240', display: 'block', position: 'relative' }}>
+                      <img src={img} alt={`Slide ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                      <div style={{ position: 'absolute', bottom: 4, right: 4, background: '#00000080', borderRadius: 4, padding: '2px 5px', fontSize: 10, color: 'white', fontFamily: 'monospace' }}>↓</div>
+                      <div style={{ position: 'absolute', top: 4, left: 4, background: '#00000080', borderRadius: 4, padding: '2px 5px', fontSize: 9, color: '#94a3b8', fontFamily: 'monospace' }}>{i + 1}</div>
+                    </a>
+                  ))}
+                </div>
               </div>
               <p style={{ color: '#475569', fontSize: 11, textAlign: 'center', marginTop: 2 }}>Tap any image to download it</p>
               {result.downloads.audio && (
