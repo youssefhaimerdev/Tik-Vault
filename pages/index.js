@@ -349,6 +349,8 @@ export default function Home() {
               <a href="#features" className="hover:text-white transition-colors">Features</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
               <a href="/blog" className="hover:text-white transition-colors">Guides</a>
+              <a href="/about" className="hover:text-white transition-colors">About</a>
+              <a href="/contact" className="hover:text-white transition-colors">Contact</a>
             </nav>
             <span className="text-xs font-mono px-3 py-1.5 rounded-full border border-[#FF2D7840] text-[#FF2D78] hidden sm:block">Free · No Watermark</span>
           </div>
@@ -562,6 +564,29 @@ export default function Home() {
           <AdSlot className="h-[100px] flex md:hidden" />
         </div>
 
+        {/* ── DEVICE PAGES ────────────────────────────────────────────────────── */}
+        <section className="relative z-10 max-w-4xl mx-auto px-4 pb-12">
+          <h2 className="font-mono font-bold text-xl sm:text-2xl text-white mb-2 text-center">Download by Device</h2>
+          <p className="text-center text-slate-500 text-sm mb-8">Step-by-step guides for every platform.</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[
+              { href: '/download-tiktok-on-iphone', icon: '🍎', label: 'iPhone' },
+              { href: '/download-tiktok-on-android', icon: '📱', label: 'Android' },
+              { href: '/download-tiktok-on-pc', icon: '💻', label: 'PC & Mac' },
+              { href: '/tiktok-mp3-downloader', icon: '🎵', label: 'MP3 Audio' },
+              { href: '/tiktok-slideshow-downloader', icon: '🖼️', label: 'Slideshows' },
+            ].map((d) => (
+              <a key={d.href} href={d.href} style={{ textDecoration: 'none' }}>
+                <div className="h-full rounded-2xl p-4 border border-[#1A2240] bg-[#0D1120] hover:border-[#FF2D7850] transition-colors flex flex-col items-center gap-2 text-center">
+                  <span style={{ fontSize: 28 }}>{d.icon}</span>
+                  <p className="text-white text-sm font-semibold">{d.label}</p>
+                  <p className="text-[#FF2D78] text-xs font-mono">Guide →</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
         {/* ── GUIDES ─────────────────────────────────────────────────────────── */}
         <section className="relative z-10 max-w-4xl mx-auto px-4 pb-12">
           <h2 className="font-mono font-bold text-xl sm:text-2xl text-white mb-2 text-center">Guides &amp; Tips</h2>
@@ -623,6 +648,8 @@ export default function Home() {
                 <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
                 <a href="/terms" className="hover:text-white transition-colors">Terms of Use</a>
                 <a href="/blog" className="hover:text-white transition-colors">Guides</a>
+                <a href="/about" className="hover:text-white transition-colors">About</a>
+                <a href="/contact" className="hover:text-white transition-colors">Contact</a>
                 <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
               </nav>
             </div>

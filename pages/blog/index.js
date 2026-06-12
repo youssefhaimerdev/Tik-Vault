@@ -5,6 +5,30 @@ const SITE_URL = 'https://tikvault.app';
 
 const articles = [
   {
+    slug: 'tiktok-algorithm-explained',
+    title: 'TikTok Algorithm Explained: What Actually Gets You More Views in 2026',
+    description: 'A clear, honest breakdown of how TikTok's recommendation system works — what signals matter, what is mostly myth, and what to focus on.',
+    date: 'May 20, 2026',
+    readTime: '8 min read',
+    tag: 'Creator Tips',
+  },
+  {
+    slug: 'how-to-grow-tiktok-following',
+    title: 'How to Grow Your TikTok Following: What Works in 2026',
+    description: 'Practical strategies for building an audience from scratch — niche selection, content structure, consistency, and what most advice gets wrong.',
+    date: 'May 22, 2026',
+    readTime: '7 min read',
+    tag: 'Growth',
+  },
+  {
+    slug: 'tiktok-beginners-guide',
+    title: 'TikTok for Beginners: A Complete Getting Started Guide (2026)',
+    description: 'Everything you need to know to get started — account setup, understanding the FYP, creating your first video, and staying safe.',
+    date: 'May 24, 2026',
+    readTime: '9 min read',
+    tag: 'Beginner',
+  },
+  {
     slug: 'how-to-download-tiktok-videos-without-watermark',
     title: 'How to Download TikTok Videos Without Watermark: The Complete Guide',
     description: 'A step-by-step guide to downloading TikTok videos without the floating watermark on any device — iPhone, Android, PC, and Mac.',
