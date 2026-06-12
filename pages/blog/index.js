@@ -7,7 +7,7 @@ const articles = [
   {
     slug: 'tiktok-algorithm-explained',
     title: 'TikTok Algorithm Explained: What Actually Gets You More Views in 2026',
-    description: 'A clear, honest breakdown of how TikTok's recommendation system works — what signals matter, what is mostly myth, and what to focus on.',
+    description: "A clear, honest breakdown of how TikTok's recommendation system works — what signals matter, what is mostly myth, and what to focus on.",
     date: 'May 20, 2026',
     readTime: '8 min read',
     tag: 'Creator Tips',
